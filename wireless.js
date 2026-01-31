@@ -332,6 +332,13 @@ var CBIWifiFrequencyValue = form.Value.extend({
 
 	// Load method to fetch WiFi device details and frequency list
 	load: function(section_id) {
+		let targetRadio;
+		if (this.option && this.option.startsWith('_freq_')) {
+			targetRadio = this.option.replace('_freq_', '');
+		} else {
+			targetRadio = section_id;
+		}
+		
 		return Promise.all([
 			network.getWifiDevice(section_id),
 			this.callFrequencyList(section_id)
