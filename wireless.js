@@ -641,6 +641,18 @@ var CBIWifiFrequencyValue = form.Value.extend({
 		uci.set('wireless', targetRadio, 'channel', value[2]);
 	},
 
+	parse: function(section_id) {
+		const fv = this.formvalue(section_id);
+		const cv = this.cfgvalue(section_id);
+
+		/* Compare arrays properly */
+		if (JSON.stringify(fv) !== JSON.stringify(cv)) {
+			this.write(section_id, fv);
+		}
+
+		return Promise.resolve();
+	},
+
 	formvalue: function(section_id) {
 		const node = this.map.findElement('data-field', this.cbid(section_id));
 
